@@ -21,7 +21,7 @@ const ListView = ({ id, setIsModalNewTaskOpen }: Props) => {
   if (isLoading)
     return (
       <div className="flex items-center justify-center py-10">
-        <Loader2 className="animate-spin h-5 w-5" />
+        <Loader2 className="animate-spin h-5 w-5 dark:text-white" />
       </div>
     );
   if (error) return <div>An error occurred!</div>;

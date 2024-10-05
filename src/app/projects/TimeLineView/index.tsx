@@ -4,6 +4,7 @@ import { useGetTasksQuery } from "@/state/api";
 import { DisplayOption, Gantt, ViewMode } from "gantt-task-react";
 import React, { useMemo, useState } from "react";
 import "gantt-task-react/dist/index.css";
+import { Loader2 } from "lucide-react";
 
 type Props = {
   id: string;
@@ -50,7 +51,12 @@ const TimelineView = ({ id, setIsModalNewTaskOpen }: Props) => {
     }));
   };
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading)
+    return (
+      <div className="flex items-center justify-center py-10">
+        <Loader2 className="animate-spin h-5 w-5 dark:text-white" />
+      </div>
+    );
   if (error || !tasks) return <div>An error occurred while fetching tasks</div>;
   return (
     <div className="px-4 xl:px-6">

@@ -11,6 +11,7 @@ import {
   GridToolbarFilterButton,
 } from "@mui/x-data-grid";
 import { dataGridClassNames, dataGridSxStyles } from "@/libs/utils";
+import { Loader2 } from "lucide-react";
 
 const CustomToolbar = () => (
   <GridToolbarContainer className="toolbar flex gap-2">
@@ -34,7 +35,12 @@ const Teams = () => {
   const { data: teams, isLoading, isError } = useGetTeamsQuery();
   const isDarkMode = useAppSelector((state) => state.global.isDarkMode);
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading)
+    return (
+      <div className="flex items-center justify-center py-10">
+        <Loader2 className="h-5 w-5 animate-spin dark:text-white" />
+      </div>
+    );
   if (isError || !teams) return <div>Error fetching teams</div>;
 
   return (

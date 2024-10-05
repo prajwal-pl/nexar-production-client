@@ -12,6 +12,7 @@ import {
 import React from "react";
 import { useAppSelector } from "../redux";
 import Image from "next/image";
+import { Loader2 } from "lucide-react";
 
 const CustomToolbar = () => (
   <GridToolbarContainer className="toolbar flex gap-2">
@@ -47,7 +48,12 @@ const UsersPage = () => {
   const isDarkMode = useAppSelector((state) => state.global.isDarkMode);
   const { data: users, isLoading, isError } = useGetUsersQuery();
 
-  if (isLoading) <div>Loading...</div>;
+  if (isLoading)
+    return (
+      <div className="flex items-center justify-center py-10">
+        <Loader2 className="animate-spin h-5 w-5 dark:text-white" />
+      </div>
+    );
   if (isError) <div>Error fetching users...</div>;
   return (
     <div className="flex w-full flex-col p-8">
