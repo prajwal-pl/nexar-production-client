@@ -10,6 +10,16 @@ const SettingsPage = (props: Props) => {
   const [updateUser] = useUpdateProfileMutation();
   const [username, setUsername] = React.useState<string>("");
 
+  if (!profile) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <h1 className="text-3xl font-normal dark:text-white">
+          Sign In to access this feature
+        </h1>
+      </div>
+    );
+  }
+
   if (isError) {
     return <div>An Error Occurred</div>;
   }
