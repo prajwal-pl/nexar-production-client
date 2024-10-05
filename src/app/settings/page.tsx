@@ -21,7 +21,11 @@ const SettingsPage = (props: Props) => {
   }
 
   if (isError) {
-    return <div>An Error Occurred</div>;
+    return (
+      <div className="text-red-500 text-xl flex items-center justify-center">
+        An Error Occurred
+      </div>
+    );
   }
 
   const handleClick = () => {
