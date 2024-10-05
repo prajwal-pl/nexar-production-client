@@ -2,7 +2,12 @@ import { useGetTasksQuery, useUpdateTaskStatusMutation } from "@/state/api";
 import { DndProvider, useDrag, useDrop } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { Task as TaskType } from "@/state/api";
-import { EllipsisVertical, MessageSquareMore, Plus } from "lucide-react";
+import {
+  EllipsisVertical,
+  Loader2,
+  MessageSquareMore,
+  Plus,
+} from "lucide-react";
 import { format } from "date-fns";
 import Image from "next/image";
 
@@ -25,7 +30,12 @@ const BoardView = ({ id, setIsModalNewTaskOpen }: BoardProps) => {
     updateTaskStatus({ taskId, status: toStatus });
   };
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading)
+    return (
+      <div className="flex items-center justify-center py-10">
+        <Loader2 className="animate-spin h-5 w-5" />
+      </div>
+    );
   if (error) return <div>An error occurred while fetching tasks</div>;
 
   return (

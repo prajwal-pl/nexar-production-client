@@ -2,6 +2,7 @@ import { Task, useGetTasksQuery } from "@/state/api";
 import TaskCard from "@/components/TaskCard";
 import React from "react";
 import Header from "@/components/Header";
+import { Loader2 } from "lucide-react";
 
 type Props = {
   id: string;
@@ -17,7 +18,12 @@ const ListView = ({ id, setIsModalNewTaskOpen }: Props) => {
     projectId: Number(id),
   });
 
-  if (isLoading) return <div>loading...</div>;
+  if (isLoading)
+    return (
+      <div className="flex items-center justify-center py-10">
+        <Loader2 className="animate-spin h-5 w-5" />
+      </div>
+    );
   if (error) return <div>An error occurred!</div>;
   return (
     <div className="px-4 pb-8 xl:px-6">

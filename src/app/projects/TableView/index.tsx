@@ -3,6 +3,7 @@ import Header from "@/components/Header";
 import { dataGridClassNames, dataGridSxStyles } from "@/libs/utils";
 import { useGetTasksQuery } from "@/state/api";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { Loader2 } from "lucide-react";
 import React from "react";
 
 type Props = {
@@ -73,7 +74,12 @@ const TableView = ({ id, setIsModalNewTaskOpen }: Props) => {
     isLoading,
   } = useGetTasksQuery({ projectId: Number(id) });
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading)
+    return (
+      <div className="flex items-center justify-center py-10">
+        <Loader2 className="animate-spin h-5 w-5" />
+      </div>
+    );
   if (error || !tasks) return <div>An error occurred while fetching tasks</div>;
 
   return (

@@ -5,6 +5,7 @@ import Header from "@/components/Header";
 import { useGetProjectsQuery } from "@/state/api";
 import { DisplayOption, Gantt, ViewMode } from "gantt-task-react";
 import "gantt-task-react/dist/index.css";
+import { Loader2 } from "lucide-react";
 import React, { useMemo, useState } from "react";
 
 type TaskTypeItems = "task" | "milestone" | "project";
@@ -53,7 +54,12 @@ const Timeline = () => {
     }));
   };
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading)
+    return (
+      <div className="flex items-center justify-center py-10">
+        <Loader2 className="animate-spin h-5 w-5" />
+      </div>
+    );
   if (isError || !projects)
     return <div>An error occurred while fetching projects</div>;
 
