@@ -13,7 +13,7 @@ const ModalNewTask = ({ isOpen, onClose, id }: Props) => {
   const [createTask, { isLoading }] = useCreateTaskMutation();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [status, setStatus] = useState<Status>(Status.ToDo);
+  const [status, setStatus] = useState<Status | undefined>(undefined);
   const [priority, setPriority] = useState<Priority>(Priority.Backlog);
   const [tags, setTags] = useState("");
   const [startDate, setStartDate] = useState("");
@@ -22,7 +22,7 @@ const ModalNewTask = ({ isOpen, onClose, id }: Props) => {
   const [assignedUserId, setAssignedUserId] = useState("");
   const [projectId, setProjectId] = useState("");
   const isFormValid = () => {
-    return title && authorUserId;
+    return title && authorUserId && startDate && dueDate && status;
   };
   const handleSubmit = async () => {
     if (!title || !authorUserId || !(id !== null || projectId)) return;
@@ -30,9 +30,12 @@ const ModalNewTask = ({ isOpen, onClose, id }: Props) => {
     const formattedStartDate = formatISO(new Date(startDate), {
       representation: "complete",
     });
+
     const formattedDueDate = formatISO(new Date(dueDate), {
       representation: "complete",
     });
+
+    console.log(status, priority);
 
     await createTask({
       title,
@@ -79,9 +82,7 @@ const ModalNewTask = ({ isOpen, onClose, id }: Props) => {
           <select
             className={selectStyles}
             value={status}
-            onChange={(e) =>
-              setStatus(Status[e.target.value as keyof typeof Status])
-            }
+            onChange={(e) => setStatus(e.target.value as Status)}
           >
             <option value="">Select Status</option>
             <option value={Status.ToDo}>To Do</option>
