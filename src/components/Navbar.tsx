@@ -15,8 +15,10 @@ import { useRouter } from "next/navigation";
 import { useGetProfileQuery } from "@/state/api";
 import { Button } from "@mui/material";
 import Image from "next/image";
+import { useAuth, UserButton } from "@clerk/nextjs";
 
 const Navbar = () => {
+  const { userId } = useAuth();
   const { data: profile } = useGetProfileQuery();
   console.log(profile);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -115,28 +117,7 @@ const Navbar = () => {
         </Link>
         <div className="ml-2 mr-5 hidden min-h-[2em] w-[0.1rem] bg-gray-200 md:inline-block"></div>
         <div>
-          <Button
-            variant={`${profile?.user ? "text" : "contained"}`}
-            onClick={profile ? handleLogout : handleLogin}
-          >
-            {profile?.user ? (
-              <>
-                {profile?.user?.profilePictureUrl ? (
-                  <Image
-                    src={profile?.user?.profilePictureUrl || ""}
-                    alt="profile"
-                    width={30}
-                    height={30}
-                    className="rounded-full"
-                  />
-                ) : (
-                  <UserCircle2Icon className="h-6 w-6 cursor-pointer dark:text-white" />
-                )}
-              </>
-            ) : (
-              "Login"
-            )}
-          </Button>
+          {!userId ? <Link href={"/sign-up"}>Sign Up</Link> : <UserButton />}
         </div>
       </div>
     </div>
