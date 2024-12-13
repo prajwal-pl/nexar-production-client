@@ -116,9 +116,7 @@ const Navbar = () => {
           <Settings className="h-6 w-6 cursor-pointer dark:text-white" />
         </Link>
         <div className="ml-2 mr-5 hidden min-h-[2em] w-[0.1rem] bg-gray-200 md:inline-block"></div>
-        <div>
-          {!userId ? <Link href={"/sign-up"}>Sign Up</Link> : <UserButton />}
-        </div>
+        <div>Sign Up</div>
       </div>
     </div>
   );

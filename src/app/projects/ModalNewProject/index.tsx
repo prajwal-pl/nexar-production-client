@@ -19,13 +19,24 @@ const ModalNewProject = ({ isOpen, onClose }: Props) => {
   };
   const handleSubmit = async () => {
     if (!projectName || !startDate || !endDate) return;
-    await createProject({
-      name: projectName,
-      description,
-      startDate: startDate ? startDate.toISOString() : undefined,
-      endDate: endDate ? endDate.toISOString() : undefined,
-    });
+
+    const formattedStartDate = new Date(startDate).toISOString();
+    const formattedEndDate = new Date(endDate).toISOString();
+
+    try {
+      await createProject({
+        name: projectName,
+        description,
+        startDate: formattedStartDate,
+        endDate: formattedEndDate,
+      });
+      onClose();
+    } catch (error) {
+      console.error("Error creating project:", error);
+    }
   };
+
+  console.log(startDate?.toLocaleDateString());
   const inputStyles =
     "w-full rounded border border-gray-300 p-2 shadow-sm dark:border-dark-tertiary dark:bg-dark-tertiary dark:text-white dark:focus:outline-none";
 
@@ -55,13 +66,13 @@ const ModalNewProject = ({ isOpen, onClose }: Props) => {
           <input
             type="date"
             className={inputStyles}
-            value={startDate ? startDate.toISOString() : ""}
+            value={startDate ? startDate.toISOString().split("T")[0] : ""}
             onChange={(e) => setStartDate(e.target.valueAsDate)}
           />
           <input
             type="date"
             className={inputStyles}
-            value={endDate ? endDate.toISOString() : ""}
+            value={endDate ? endDate.toISOString().split("T")[0] : ""}
             onChange={(e) => setEndDate(e.target.valueAsDate)}
           />
         </div>
